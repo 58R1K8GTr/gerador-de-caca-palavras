@@ -1,16 +1,23 @@
 """Tratar erros com funções isoladas."""
 
-from typing import Callable, TypeVar
 
-T = TypeVar('T')
+from pathlib import Path
+
+from rich import print as rich_print
 
 
-def erro_entrada_dimensao(funcao: Callable[[], T]) -> T | None:
-    """Executa a função e retorna seu resultado, tratando erros."""
+def erro_entrada_arquivo(local: Path) -> list[str] | None:
+    """Retorna o conteúdo de um arquivo sem erros, se possível."""
+    forma = '[red]{}[/]'
     try:
-        return funcao()
-    except (ValueError, TypeError):
-        return print(
-            "Formato de entrada errado. Apenas 2 "
-            "números separados por espaço"
-        )
+        with local.open('r', encoding='utf8') as arquivo:
+            return arquivo.readlines()
+    except FileNotFoundError:
+        rich_print(forma.format('Insira um arquivo existente.'))
+    except PermissionError:
+        rich_print(forma.format(
+            'O programa não tem permissões para abrir o arquivo.'
+        ))
+    except OSError:
+        rich_print(forma.format('Erro inesperado.'))
+    return None

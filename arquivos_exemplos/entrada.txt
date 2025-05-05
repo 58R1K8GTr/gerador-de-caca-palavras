@@ -1,2 +1,2 @@
-15 15
+25 25
 arquivos_exemplos/palavras.txt

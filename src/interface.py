@@ -1,28 +1,34 @@
 """Implementação da interface com o usuário."""
 
 
+from pathlib import Path
+
+from click import command, argument, option
 from rich import print as rich_print
 
-from src.entrada import pegar_dimenssoes, pegar_local_arquivo
 from src.arquivo import ler_arquivo_com_filtro
-from src.utilitarios import fazer_ate
 from src.quadro import Quadro
 
 
-def main():
-    """Função principal que interage com o usuário."""
-    print(
-        'O arquivo deve conter somente as palavras que serão procuradas',
-        'e também conter uma palavra por linha.'
-    )
-    tamanho = fazer_ate(pegar_dimenssoes)
-    local_arquivo = pegar_local_arquivo()
+@command()
+@argument('altura', type=int)
+@argument('largura', type=int)
+@argument('arquivo', type=Path)
+@option('--colorido/--nao-colorido', is_flag=True, default=True)
+def cli_main(altura: int, largura: int, arquivo: Path, colorido: bool) -> None:
+    """
+    Programa cli que cria caça-palavras.
+
+    regras do arquivo com palavras:\n
+        - cada palavra em uma linha\n
+        - cada linha pode conter uma palavra
+    """
     palavras = ler_arquivo_com_filtro(
-        lambda x: any((x == '', ' ' in x)), local_arquivo
+        lambda x: any((x == '', ' ' in x)), arquivo
     )
-    caca_palavras = Quadro(*tamanho)
+    caca_palavras = Quadro(largura, altura, colorido)
     for palavra in palavras:
         adicionada = caca_palavras.adicionar_palavra(palavra)
-        nao = '' if adicionada else ' não'
-        print(f"palavra '{palavra}'{nao} adicionada")
+        nao = '[green]' if adicionada else ' [red]não'
+        rich_print(f"palavra {palavra}{nao} adicionada[/]")
     rich_print(caca_palavras.gerar_texto())

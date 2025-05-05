@@ -16,9 +16,10 @@ CARACTERES = ascii_uppercase + 'ÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ'
 
 class Quadro:
     """Classe container que representa um quadro 2d."""
-    def __init__(self, largura: int, altura: int):
+    def __init__(self, largura: int, altura: int, colorido: bool = False):
         self.__largura = largura
         self.__altura = altura
+        self.__colorido = colorido
         self.__matriz = [
             [
                 Letra(choice(CARACTERES), x, y)
@@ -81,7 +82,8 @@ class Quadro:
             letra.definir_caractere(caractere.upper())
             nova_palavra.adicionar_letra(letra)
         self.__palavras.append(nova_palavra)
-        nova_palavra.colorir()
+        if self.__colorido:
+            nova_palavra.colorir()
 
     def largura(self) -> int:
         """Retorna a largura do quadro."""
