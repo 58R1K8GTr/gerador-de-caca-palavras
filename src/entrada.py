@@ -12,7 +12,8 @@ TEXTO_ENTRADA_DIMENSAO = (
 )
 
 TEXTO_ENTRADA_LOCAL_ARQUIVO = (
-    'Digite o local do arquivo que contém as palavras: '
+    'Digite o local do arquivo que contém as palavras '
+    'ou arraste ele para o terminal: '
 )
 
 
@@ -27,6 +28,5 @@ def pegar_dimenssoes() -> tuple[int, int]:
 
 def pegar_local_arquivo() -> Path:
     """Retorna o local do arquivo."""
-    print('digite o local completo ou arraste o arquivo até o terminal.')
     local_arquivo = fazer_ate(lambda: input(TEXTO_ENTRADA_LOCAL_ARQUIVO))
     return Path(local_arquivo.strip().strip("'"))

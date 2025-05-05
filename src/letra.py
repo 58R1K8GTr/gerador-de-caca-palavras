@@ -33,10 +33,14 @@ class Letra:
         """Retorna as coordenadas em tupla[x, y]."""
         return (self.__x, self.__y)
 
-    def definir_letra(self, caractere: str) -> None:
+    def definir_caractere(self, caractere: str) -> None:
         """Define a letra como fixa em uma palavra."""
-        self.__caractere = f"[red]{caractere}[/red]"
+        self.__caractere = caractere
         self.__fixa = True
+
+    def colorir(self, cor: str) -> None:
+        """Define a letra como fixa em uma palavra."""
+        self.__caractere = f"[{cor}]{self.__caractere}[/{cor}]"
 
     @property
     def caractere(self) -> str:

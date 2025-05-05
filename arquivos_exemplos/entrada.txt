@@ -1,2 +1,2 @@
-25 25
-palavras.txt
+15 15
+arquivos_exemplos/palavras.txt

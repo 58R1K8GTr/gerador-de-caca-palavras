@@ -27,7 +27,6 @@ class Quadro:
             for y in range(altura)
         ]
         self.__palavras: list[Palavra] = []
-        self.__letras_impossiveis: set[Letra] = set()
 
     def adicionar_palavra(self, palavra: str) -> bool:
         """Adiciona uma palavra no quadro."""
@@ -38,7 +37,6 @@ class Quadro:
         for letra_base in posicoes:
             direcao_escolhida = self.__direcao_valida(letra_base, palavra)
             if direcao_escolhida:
-                self.__letras_impossiveis.add(letra_base)
                 self.__inserir_palavra(
                     palavra, *letra_base.posicao, direcao_escolhida
                 )
@@ -76,10 +74,14 @@ class Quadro:
     ):
         """Insere a palavra no quadro."""
         dx, dy = direcao.value
-        for i, letra in enumerate(palavra):
+        nova_palavra = Palavra(palavra, x, y, (dx, dy))
+        for i, caractere in enumerate(palavra):
             nx, ny = x + i * dx, y + i * dy
-            self.__matriz[ny][nx].definir_letra(letra.upper())
-        self.__palavras.append(Palavra(palavra, x, y, direcao.value))
+            letra = self.__matriz[ny][nx]
+            letra.definir_caractere(caractere.upper())
+            nova_palavra.adicionar_letra(letra)
+        self.__palavras.append(nova_palavra)
+        nova_palavra.colorir()
 
     def largura(self) -> int:
         """Retorna a largura do quadro."""
