@@ -23,8 +23,7 @@ def cli_main(
     Programa cli que cria caça-palavras.
 
     regras do arquivo com palavras:\n
-        - cada palavra em uma linha\n
-        - cada linha pode conter uma palavra
+        - cada palavra em uma linha
     """
     palavras = ler_arquivo_com_filtro(
         lambda x: any((x == '', ' ' in x)), arquivo
