@@ -16,7 +16,7 @@ CARACTERES = ascii_uppercase + 'ÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ'
 
 class Quadro:
     """Classe container que representa um quadro 2d."""
-    def __init__(self, largura: int, altura: int, colorido: bool = False):
+    def __init__(self, largura: int, altura: int, colorido: bool):
         self.__largura = largura
         self.__altura = altura
         self.__colorido = colorido

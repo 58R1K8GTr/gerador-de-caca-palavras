@@ -15,7 +15,10 @@ from src.quadro import Quadro
 @argument('largura', type=int)
 @argument('arquivo', type=Path)
 @option('--colorido/--nao-colorido', is_flag=True, default=True)
-def cli_main(altura: int, largura: int, arquivo: Path, colorido: bool) -> None:
+@option('-v', '--verboso', is_flag=True)
+def cli_main(
+    altura: int, largura: int, arquivo: Path, colorido: bool, verboso: bool
+) -> None:
     """
     Programa cli que cria caça-palavras.
 
@@ -29,6 +32,7 @@ def cli_main(altura: int, largura: int, arquivo: Path, colorido: bool) -> None:
     caca_palavras = Quadro(largura, altura, colorido)
     for palavra in palavras:
         adicionada = caca_palavras.adicionar_palavra(palavra)
-        nao = '[green]' if adicionada else ' [red]não'
-        rich_print(f"palavra {palavra}{nao} adicionada[/]")
+        if verboso:
+            nao = '[green]' if adicionada else ' [red]não'
+            rich_print(f"palavra {palavra}{nao} adicionada[/]")
     rich_print(caca_palavras.gerar_texto())
